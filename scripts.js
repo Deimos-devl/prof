@@ -149,7 +149,7 @@ document.addEventListener("DOMContentLoaded", () => {
             total += valorFreteManual;
 
             const mensagem = [
-                desconto > 0 ? `DESCONTO DE ${desconto}%!` : null,
+                desconto > 0 ? `DESCONTO DE ${desconto}%! 🎁` : null,
                 `Total de ${formatarMoeda(total)} já com o frete incluso (Transportadora)`,
                 `🔥 Nossa garantia é 100% gratuita! 🔥`,
                 `Seu novo pedido será 📦:`,
