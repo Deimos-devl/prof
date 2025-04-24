@@ -39,13 +39,14 @@ document.addEventListener("DOMContentLoaded", () => {
             preco: 559.99,
             condicao: (q) => q === 5,
             brindes: 0,
-
+            adicionais: []
         },
         {
             nome: "COMBO 2",
             preco: 1109.99,
             condicao: (q) => q === 10,
             brindes: 1,
+            adicionais: []
         },
         {
             nome: "COMBO 3",
@@ -117,17 +118,17 @@ document.addEventListener("DOMContentLoaded", () => {
             if (combo) {
                 total = combo.preco + valorFreteManual;
 
-                const mensagem = 
-`Total de ${formatarMoeda(total)} já com o frete incluso (Transportadora) 
-🔥 Nossa garantia é 100% gratuita! 🔥
-
-Seu novo pedido será 📦:
-${produtosSelecionados.map(p => `${p.quantidade}x ${p.nome}`).join("\n")}
-
-${combo.brindes > 0 ? `+ ${combo.brindes} produtos de brinde` : ""}
-${combo.adicionais.length ? `+ ${combo.adicionais.join(", ")}` : ""}
-
-Podemos fechar o seu pedido?`;
+                const mensagem = [
+                    desconto > 0 ? `DESCONTO DE ${desconto}%!` : null,
+                    `Total de ${formatarMoeda(total)} já com o frete incluso (Transportadora)`,
+                    `🔥 Nossa garantia é 100% gratuita! 🔥`,
+                    `Seu novo pedido será 📦:`,
+                    produtosSelecionados.map(p => `${p.quantidade}x ${p.nome}`).join("\n"),
+                    combo.brindes > 0 ? `+ ${combo.brindes} produtos de brinde` : null,
+                    combo.adicionais && combo.adicionais.length ? `+ ${combo.adicionais.join(", ")}` : null,
+                    "", // garante espaço antes do fechamento
+                    `Podemos fechar o seu pedido?`
+                ].filter(line => line !== null).join("\n");
 
                 navigator.clipboard.writeText(mensagem).then(() => {
                     alert("Orçamento copiado!");
@@ -147,14 +148,15 @@ Podemos fechar o seu pedido?`;
 
             total += valorFreteManual;
 
-            const mensagem = 
-`Total de ${formatarMoeda(total)} já com o frete incluso (Transportadora) 
-🔥 Nossa garantia é 100% gratuita! 🔥
-
-Seu novo pedido será 📦:
-${produtosSelecionados.map(p => `${p.quantidade}x ${p.nome} ${formatarMoeda(p.quantidade * p.preco)}`).join("\n")}
-
-Podemos fechar o seu pedido?`;
+            const mensagem = [
+                desconto > 0 ? `DESCONTO DE ${desconto}%!` : null,
+                `Total de ${formatarMoeda(total)} já com o frete incluso (Transportadora)`,
+                `🔥 Nossa garantia é 100% gratuita! 🔥`,
+                `Seu novo pedido será 📦:`,
+                produtosSelecionados.map(p => `${p.quantidade}x ${p.nome} ${formatarMoeda(p.quantidade * p.preco)}`).join("\n"),
+                "", // garante espaço antes do fechamento
+                `Podemos fechar o seu pedido?`
+            ].filter(line => line !== null).join("\n");
 
             navigator.clipboard.writeText(mensagem).then(() => {
                 alert("Orçamento copiado!");
